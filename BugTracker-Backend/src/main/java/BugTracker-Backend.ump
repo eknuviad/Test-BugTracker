@@ -1,0 +1,72 @@
+namespace ca.mcgill.BugTracker.model;
+
+class User
+{
+  name;
+  email;
+  description;
+  int phoneNumber;
+  1 -- 0..3 UserRole;
+}
+
+class Manager
+{
+  isA UserRole;
+}
+
+class UserRole
+{
+  password;
+  userName;
+}
+
+class Admin
+{
+  isA UserRole;
+}
+
+class Developer
+{
+  isA UserRole;
+}
+
+class Project
+{
+  name;
+  int id;
+  * -- 1 UserRole;
+}
+
+enum InvitationStatus {NewInvite, Denied, Accepted }
+
+class Invitation
+{
+  InvitationStatus invStatus;
+  int id;
+  * -- 1 UserRole;
+  * -- 1 Project;
+}
+
+class Comment
+{
+  Time timeStamp;
+  message;
+  * -> 1 UserRole;
+  * -> 1 Ticket;
+}
+
+enum TicketStatus {Todo, InProgress, Done }
+
+class Ticket
+{
+  TicketStatus ticketStatus;
+  description;
+  Date startDate;
+Date endDate;
+* -- 1 UserRole;
+}
+
+association {  
+    1 Project p <@>- * Ticket t;  
+}  
+
